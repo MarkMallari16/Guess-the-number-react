@@ -3,14 +3,16 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const RANDOM_NUMBERS = Math.floor((Math.random() * 10) + 1)
 
-  const [randomNumber] = useState(RANDOM_NUMBERS);
+  const [randomNumber] = useState(generateRandomNumbers());
   const [userGuess, setUserGuess] = useState("")
   const [message, setMessage] = useState("");
   const [lives, setLives] = useState(3);
-  console.log(RANDOM_NUMBERS)
+  const [isGameOver, setIsGameOver] = useState(false);
 
+  function generateRandomNumbers() {
+    return Math.floor((Math.random() * 10) + 1);
+  }
   function validateGuess(guess) {
     if (isNaN(userGuess)) {
       return "You must enter valid number";
@@ -28,6 +30,7 @@ function App() {
       setLives((prevLive) => prevLive - 1);
 
       if (lives - 1 === 0) {
+        setIsGameOver(true)
         return `Game over! The guess number was ${guess}`;
       }
       return "Sorry, you did not guess the number! Try Again."
@@ -53,13 +56,13 @@ function App() {
     <>
       <div className='min-h-screen grid place-items-center max-w-7xl mx-auto'>
         <div className=' p-10 rounded-2xl'>
-          <div className='text-xl font-medium text-right mb-3'>Lives: {lives} {lives === 0 ? '💔' : '❤️' }</div>
+          <div className='text-xl font-medium text-right mb-3'>Lives: {lives} {lives === 0 ? '💔' : '❤️'}</div>
           <div className='text-center text-3xl lg:text-4xl font-bold uppercase'>Guess the Number?</div>
           <div className='mt-5'>
-            <input type="text" className='input input-bordered w-full' placeholder='Enter your guess' value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyDown={handleKeyDown} disabled={lives === 0} />
+            <input type="text" className='input input-bordered w-full' placeholder='Enter your guess' value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyDown={handleKeyDown} disabled={isGameOver} />
           </div>
           <div>
-            <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={lives === 0}>Guess</button>
+            <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={isGameOver}>Guess</button>
           </div>
 
           <div className='mt-5 text-center text-2xl'>
