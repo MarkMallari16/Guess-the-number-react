@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
 
-  const [randomNumber] = useState(generateRandomNumbers());
+  const [randomNumber, setRandomNumber] = useState(generateRandomNumbers());
   const [userGuess, setUserGuess] = useState("")
   const [message, setMessage] = useState("");
   const [lives, setLives] = useState(3);
@@ -52,6 +52,13 @@ function App() {
       handleUserGuess();
     }
   }
+  const handleTryAgain = () => {
+    setRandomNumber(generateRandomNumbers());
+    setUserGuess("")
+    setMessage("")
+    setLives(3)
+    setIsGameOver(false)
+  }
   return (
     <>
       <div className='min-h-screen grid place-items-center max-w-7xl mx-auto'>
@@ -64,10 +71,16 @@ function App() {
           <div>
             <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={isGameOver}>Guess</button>
           </div>
-
-          <div className='mt-5 text-center text-2xl'>
-            {message}
-          </div>
+          {isGameOver && (
+            <div>
+              <button className='btn btn-ghost w-full mt-5' onClick={handleTryAgain}>Try Again</button>
+            </div>
+          )}
+          {!isGameOver &&
+            <div className='mt-5 text-center text-2xl'>
+              {message}
+            </div>
+          }
         </div>
       </div>
     </>
