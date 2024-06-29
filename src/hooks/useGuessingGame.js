@@ -14,19 +14,20 @@ function useGuessingGame() {
     });
     const [range, setRange] = useState(5);
     const [randomNumber, setRandomNumber] = useState(() => generateRandomNumbers("easy", 5));
-
+    console.log(randomNumber);
 
     useEffect(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty);
         setRange(newRange);
         setLives(newLives);
+        
         setRandomNumber(generateRandomNumbers(difficulty, newRange))
 
         localStorage.setItem("difficulty", difficulty);
 
     }, [difficulty])
 
-    function generateRandomNumbers(range) {
+    function generateRandomNumbers(difficulty, range) {
         const minimumNumber = 1;
 
         return Math.floor((Math.random() * range) + minimumNumber)

@@ -6,12 +6,12 @@ function IntroComponent() {
     const { handlePlay } = usePlay();
 
     return (
-        <div>
-            <div className='text-4xl lg:text-6xl header-font uppercase text-center'>Guess the number ?</div>
-            <div className='text-center mt-2'>Created by: Mark</div>
-            <button className='btn btn-primary w-full mt-5' onClick={handlePlay}>Play</button>
-
-           
+        <div className='min-h-screen grid items-center'>
+            <div>
+                <div className='text-4xl lg:text-6xl header-font uppercase text-center'>Guess the number?</div>
+                <div className='text-center mt-2'>Created by: Mark</div>
+                <button className='btn btn-primary w-full mt-5' onClick={handlePlay}>Play</button>
+            </div>
         </div>
     )
 }
