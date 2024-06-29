@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import bg from '../assets/bg.mp3'
 function Audio() {
+
+
+    const audioRef = useRef();
 
     const [isMuted, setIsMuted] = useState(() => {
         return JSON.parse(localStorage.getItem('audio')) ?? true;
     });
 
-
     useEffect(() => {
-        const audioElement = document.getElementById("bgAudio");
-        if (audioElement) {
-            audioElement.muted = isMuted
+
+        if (audioRef.current) {
+            audioRef.current.muted = isMuted
         }
 
         localStorage.setItem("audio", JSON.stringify(isMuted));
     }, [isMuted])
 
     const toggleMute = () => {
-        const audioElement = document.getElementById("bgAudio");
-        if (audioElement) {
+
+        if (audioRef.current) {
+            const audioElement = audioRef.current
             if (audioElement.paused) {
                 audioElement.play();
             } else {
@@ -29,9 +32,9 @@ function Audio() {
     }
     return (
         <>
-            <audio id='bgAudio' controls src={bg} type='audio/mpeg' loop autoPlay className='hidden'>
+            <audio ref={audioRef} id='bgAudio' controls src={bg} type='audio/mpeg' loop autoPlay className='hidden'>
             </audio>
-            
+
             {isMuted ? (
                 <div className='cursor-pointer' onClick={toggleMute}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6"
@@ -49,11 +52,7 @@ function Audio() {
                 </div>
 
             )}
-
-
         </>
-
-
     )
 }
 
