@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 function useGuessingGame() {
@@ -9,6 +9,8 @@ function useGuessingGame() {
     const [lives, setLives] = useState(3);
     const [isGameOver, setIsGameOver] = useState(false);
     const [isUserGuessed, setIsUserGuessed] = useState(false);
+
+    console.log(randomNumber)
 
     function generateRandomNumbers() {
         return Math.floor((Math.random() * 10) + 1)
@@ -35,12 +37,10 @@ function useGuessingGame() {
             if (updatedLives === 0) {
                 setIsGameOver(true);
                 return `Game over! The correct number was ${randomNumber}.`;
-                
+
             }
             return "Sorry, you did not guess the number! Try Again.";
         }
-
-
     }
 
     const handleUserGuess = () => {
@@ -69,7 +69,6 @@ function useGuessingGame() {
     }, [])
 
     return {
-        randomNumber,
         userGuess,
         setUserGuess,
         message,
