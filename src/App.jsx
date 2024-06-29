@@ -1,64 +1,22 @@
-import { useState } from 'react'
+
 
 import './App.css'
 
+import useGuessingGame from './hooks/useGuessingGame';
 function App() {
 
-  const [randomNumber, setRandomNumber] = useState(generateRandomNumbers());
-  const [userGuess, setUserGuess] = useState("")
-  const [message, setMessage] = useState("");
-  const [lives, setLives] = useState(3);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const {
+    userGuess,
+    setUserGuess,
+    message,
+    lives,
+    isGameOver,
+    isUserGuessed,
+    handleUserGuess,
+    handleKeyDown,
+    handleTryAgain, } = useGuessingGame();
 
-  function generateRandomNumbers() {
-    return Math.floor((Math.random() * 10) + 1);
-  }
-  function validateGuess(guess) {
-    if (isNaN(userGuess)) {
-      return "You must enter valid number";
-    } else if (guess < 1 || guess > 10) {
-      return "You must guess number ranged 1 - 10 only";
-    }
-
-    return null
-  }
-
-  function checkGuess(guess) {
-    if (randomNumber === guess) {
-      return "You guess the message!"
-    } else {
-      setLives((prevLive) => prevLive - 1);
-
-      if (lives - 1 === 0) {
-        setIsGameOver(true)
-        return `Game over! The guess number was ${guess}`;
-      }
-      return "Sorry, you did not guess the number! Try Again."
-    }
-  }
-  const handleUserGuess = () => {
-    const guess = parseInt(userGuess, 10);
-    const validationMessage = validateGuess(guess);
-
-    if (validationMessage) {
-      setMessage(validationMessage)
-    } else {
-      setMessage(checkGuess(guess));
-    }
-  }
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleUserGuess();
-    }
-  }
-  const handleTryAgain = () => {
-    setRandomNumber(generateRandomNumbers());
-    setUserGuess("")
-    setMessage("")
-    setLives(3)
-    setIsGameOver(false)
-  }
+  console.log(isUserGuessed);
   return (
     <>
       <div className='min-h-screen grid place-items-center max-w-7xl mx-auto'>
@@ -66,21 +24,21 @@ function App() {
           <div className='text-xl font-medium text-right mb-3'>Lives: {lives} {lives === 0 ? '💔' : '❤️'}</div>
           <div className='text-center text-3xl lg:text-4xl font-bold uppercase'>Guess the Number?</div>
           <div className='mt-5'>
-            <input type="text" className='input input-bordered w-full' placeholder='Enter your guess' value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyDown={handleKeyDown} disabled={isGameOver} />
+            <input type="text" className='input input-bordered w-full' placeholder='Enter your guess' value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyDown={handleKeyDown} disabled={isGameOver || isUserGuessed} />
           </div>
           <div>
-            <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={isGameOver}>Guess</button>
+            <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={isGameOver || isUserGuessed}>Guess</button>
           </div>
-          {isGameOver && (
+          {(isGameOver || isUserGuessed) && (
             <div>
-              <button className='btn btn-ghost w-full mt-5' onClick={handleTryAgain}>Try Again</button>
+              <button className='btn btn-primary w-full mt-5 ' onClick={handleTryAgain}>Try Again</button>
             </div>
           )}
-          {!isGameOver &&
-            <div className='mt-5 text-center text-2xl'>
-              {message}
-            </div>
-          }
+
+          <div className='mt-5 text-center text-2xl'>
+            {message}
+          </div>
+
         </div>
       </div>
     </>
