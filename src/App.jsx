@@ -69,7 +69,7 @@ function App() {
                 <div className='mt-1'>{hint}</div>
               </div>
               <div>
-                <button className='btn btn-accent w-full mt-5' onClick={handleUserGuess} disabled={isGameOver || isUserGuessed}>Guess</button>
+                <button className='btn btn-primary w-full mt-5' onClick={handleUserGuess} disabled={isGameOver || isUserGuessed}>Guess</button>
               </div>
               {(isGameOver || isUserGuessed) && (
                 <div>
