@@ -10,8 +10,6 @@ function useGuessingGame() {
     const [isGameOver, setIsGameOver] = useState(false);
     const [isUserGuessed, setIsUserGuessed] = useState(false);
 
-    console.log(randomNumber)
-
     function generateRandomNumbers() {
         return Math.floor((Math.random() * 10) + 1)
     }
@@ -57,6 +55,7 @@ function useGuessingGame() {
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             handleUserGuess();
+            
         }
     }
     const handleTryAgain = useCallback(() => {
