@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+import { usePlay } from "../provider/PlayProvider";
 
 
 function useGuessingGame() {
     const getInitialDifficulty = () => localStorage.getItem("difficulty") || "easy"
     const getInitialRangeAndLives = (difficulty) => getRangeAndLives(difficulty);
+
+    const { handleQuit } = usePlay();
+
+
     const [difficulty, setDifficulty] = useState(getInitialDifficulty);
     const { newRange, newLives } = getInitialRangeAndLives(difficulty);
 
@@ -21,7 +26,7 @@ function useGuessingGame() {
         const { newRange, newLives } = getRangeAndLives(difficulty);
         setRange(newRange);
         setLives(newLives);
-     
+
         setRandomNumber(generateRandomNumbers(difficulty, newRange))
 
         localStorage.setItem("difficulty", difficulty);
@@ -102,6 +107,14 @@ function useGuessingGame() {
         setIsGameOver(false)
         setIsUserGuessed(false)
     }
+    const handleResetAndQuit = () => {
+        const { newRange, newLives } = getRangeAndLives(difficulty);
+        handleQuit();
+
+        setRandomNumber(generateRandomNumbers(difficulty, newRange));
+        resetGameState(newRange, newLives);
+        setDifficulty(localStorage.getItem("difficulty")) || "easy";
+    }
     //handle try again
     const handleTryAgain = useCallback(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty)
@@ -123,6 +136,7 @@ function useGuessingGame() {
         range,
         setDifficulty,
         setUserGuess,
+        handleResetAndQuit,
         handleUserGuess,
         handleKeyDown,
         handleTryAgain,

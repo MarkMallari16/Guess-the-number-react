@@ -28,17 +28,18 @@ function App() {
     isUserGuessed,
     hint,
     difficulty,
-    setDifficulty,
     range,
+    setDifficulty,
+    handleResetAndQuit,
     handleUserGuess,
     handleKeyDown,
     handleTryAgain, } = useGuessingGame();
 
-
-  const { isPlay, handleQuit } = usePlay();
+  const { isPlay } = usePlay();
 
   const windowSize = useWindowSize();
   useGameModal(isGameOver, isUserGuessed)
+
   const handleDifficulty = (selectedDifficulty) => {
     setDifficulty(selectedDifficulty);
   }
@@ -70,7 +71,7 @@ function App() {
               {(isGameOver || isUserGuessed) && (
                 <div>
                   <button className='btn btn-accent w-full mt-5' onClick={handleTryAgain}>Try Again</button>
-                  <button className='btn btn-error w-full mt-5' onClick={handleQuit}>Quit</button>
+                  <button className='btn btn-error w-full mt-5' onClick={handleResetAndQuit}>Quit</button>
                 </div>
               )}
             </div>
