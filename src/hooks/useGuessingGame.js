@@ -2,18 +2,20 @@ import { useCallback, useEffect, useState } from "react";
 
 
 function useGuessingGame() {
+    const getInitialDifficulty = () => localStorage.getItem("difficulty") || "easy"
+    const getInitialRangeAndLives = (difficulty) => getRangeAndLives(difficulty);
+    const [difficulty, setDifficulty] = useState(getInitialDifficulty);
+    const { newRange, newLives } = getInitialRangeAndLives(difficulty);
 
     const [userGuess, setUserGuess] = useState("")
     const [message, setMessage] = useState("");
-    const [lives, setLives] = useState(5);
+    const [lives, setLives] = useState(newLives);
     const [isGameOver, setIsGameOver] = useState(false);
     const [isUserGuessed, setIsUserGuessed] = useState(false);
     const [hint, setHint] = useState('');
-    const [difficulty, setDifficulty] = useState(() => {
-        return localStorage.getItem("difficulty") || "easy";
-    });
+
     const [range, setRange] = useState(5);
-    const [randomNumber, setRandomNumber] = useState(() => generateRandomNumbers("easy", 5));
+    const [randomNumber, setRandomNumber] = useState(() => generateRandomNumbers(difficulty, newRange));
 
     useEffect(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty);
@@ -23,7 +25,6 @@ function useGuessingGame() {
         setRandomNumber(generateRandomNumbers(difficulty, newRange))
 
         localStorage.setItem("difficulty", difficulty);
-
     }, [difficulty])
 
     function generateRandomNumbers(difficulty, range) {
@@ -94,13 +95,13 @@ function useGuessingGame() {
     const resetGameState = (newRange, newLives) => {
         setUserGuess("")
         setMessage("")
+        setHint("")
         setLives(newLives)
         setRange(newRange)
-        setHint("")
         setIsGameOver(false)
         setIsUserGuessed(false)
     }
-    
+
     const handleTryAgain = useCallback(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty)
 
