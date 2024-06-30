@@ -14,6 +14,7 @@ import NavBar from './components/NavBar';
 import GameOverBg from './assets/gameoverbg.mp3';
 import WinnerBg from './assets/winnerbg.mp3';
 import DifficultyDropdown from './components/DifficultyDropdown';
+import Footer from './components/Footer';
 function App() {
 
 
@@ -87,6 +88,7 @@ function App() {
             <audio src={WinnerBg} autoPlay />
           </>
         }
+        <Footer />
       </div>
 
     </>
