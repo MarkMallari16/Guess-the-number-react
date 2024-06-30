@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Modal({ message}) {
+function Modal({ message }) {
     return (
         <dialog id="modal" className="modal">
             <div className="modal-box py-10 flex justify-center items-center">

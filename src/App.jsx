@@ -73,7 +73,7 @@ function App() {
               </div>
               {(isGameOver || isUserGuessed) && (
                 <div>
-                  <button className='btn btn-accent w-full mt-5 ' onClick={handleTryAgain}>Try Again</button>
+                  <button className='btn btn-accent w-full mt-5' onClick={handleTryAgain}>Try Again</button>
                 </div>
               )}
             </div>
