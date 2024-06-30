@@ -47,7 +47,7 @@ function useGuessingGame() {
                 return { newRange: 5, newLives: 8 }
         }
     }
-    function validateGuess(guess) {
+    function validateGuess() {
         if (isNaN(userGuess) || userGuess.trim() === "") {
             return "You must enter valid number";
         }
@@ -57,7 +57,8 @@ function useGuessingGame() {
     function checkGuess(guess) {
         if (randomNumber === guess) {
             setIsUserGuessed(true);
-            return "You guess the number!"
+            return "You guess the number!";
+            
         } else {
             const updatedLives = lives - 1;
             const newHint = guess < randomNumber ? 'Try Higher!' : 'Try Lower!';
@@ -113,15 +114,15 @@ function useGuessingGame() {
 
     return {
         userGuess,
-        setUserGuess,
         message,
         lives,
         isGameOver,
         isUserGuessed,
         hint,
         difficulty,
-        setDifficulty,
         range,
+        setDifficulty,
+        setUserGuess,
         handleUserGuess,
         handleKeyDown,
         handleTryAgain,
