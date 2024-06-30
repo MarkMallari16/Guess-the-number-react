@@ -14,13 +14,12 @@ function useGuessingGame() {
     });
     const [range, setRange] = useState(5);
     const [randomNumber, setRandomNumber] = useState(() => generateRandomNumbers("easy", 5));
-    console.log(randomNumber);
 
     useEffect(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty);
         setRange(newRange);
         setLives(newLives);
-        
+
         setRandomNumber(generateRandomNumbers(difficulty, newRange))
 
         localStorage.setItem("difficulty", difficulty);
@@ -92,16 +91,24 @@ function useGuessingGame() {
             handleUserGuess();
         }
     }
-    const handleTryAgain = useCallback(() => {
-        setRandomNumber(generateRandomNumbers());
+    const resetGameState = (newRange, newLives) => {
         setUserGuess("")
         setMessage("")
-        setLives(3)
+        setLives(newLives)
+        setRange(newRange)
         setHint("")
         setIsGameOver(false)
         setIsUserGuessed(false)
+    }
+    
+    const handleTryAgain = useCallback(() => {
+        const { newRange, newLives } = getRangeAndLives(difficulty)
+
+        setRandomNumber(generateRandomNumbers(difficulty, newRange));
+        resetGameState(newRange, newLives);
         setDifficulty(localStorage.getItem("difficulty")) || "easy";
     }, [difficulty])
+
 
     return {
         userGuess,
