@@ -102,7 +102,7 @@ function useGuessingGame() {
         setIsGameOver(false)
         setIsUserGuessed(false)
     }
-
+    //handle try again
     const handleTryAgain = useCallback(() => {
         const { newRange, newLives } = getRangeAndLives(difficulty)
 

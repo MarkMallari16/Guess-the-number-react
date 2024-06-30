@@ -15,6 +15,7 @@ import GameOverBg from './assets/gameoverbg.mp3';
 import WinnerBg from './assets/winnerbg.mp3';
 import DifficultyDropdown from './components/DifficultyDropdown';
 import Footer from './components/Footer';
+import useGameModal from './hooks/useGameModal';
 function App() {
 
 
@@ -33,17 +34,11 @@ function App() {
     handleKeyDown,
     handleTryAgain, } = useGuessingGame();
 
-  useEffect(() => {
-    if (isGameOver || isUserGuessed) {
-      const modal = document.getElementById("modal")
-      modal.showModal();
-    }
-  }, [isGameOver, isUserGuessed])
 
   const { isPlay } = usePlay();
 
   const windowSize = useWindowSize();
-
+  useGameModal(isGameOver, isUserGuessed)
   const handleDifficulty = (selectedDifficulty) => {
     setDifficulty(selectedDifficulty);
   }
@@ -59,7 +54,7 @@ function App() {
             <div className=' p-10 rounded-2xl'>
               <div className='flex  justify-center items-center lg:justify-end  gap-5 text-xl font-medium mb-5'>
                 <div>
-                  <DifficultyDropdown difficulty={difficulty} onSelectDifficulty={handleDifficulty} />
+                  <DifficultyDropdown difficulty={difficulty} onSelectDifficulty={handleDifficulty} isGameOver={isGameOver} isUserGuessed={isUserGuessed} />
                 </div>
                 <div>Lives: {lives} {lives === 0 ? '💔' : '❤️'}</div>
               </div>
