@@ -35,7 +35,7 @@ function App() {
     handleTryAgain, } = useGuessingGame();
 
 
-  const { isPlay } = usePlay();
+  const { isPlay, handleQuit } = usePlay();
 
   const windowSize = useWindowSize();
   useGameModal(isGameOver, isUserGuessed)
@@ -70,6 +70,7 @@ function App() {
               {(isGameOver || isUserGuessed) && (
                 <div>
                   <button className='btn btn-accent w-full mt-5' onClick={handleTryAgain}>Try Again</button>
+                  <button className='btn btn-error w-full mt-5' onClick={handleQuit}>Quit</button>
                 </div>
               )}
             </div>
@@ -83,9 +84,9 @@ function App() {
             <audio src={WinnerBg} autoPlay />
           </>
         }
-        <Footer />
+          <Footer />
       </div>
-
+    
     </>
   )
 }
