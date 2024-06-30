@@ -77,7 +77,7 @@ function App() {
                 </div>
               )}
             </div>
-            <Modal message={message} />
+            <Modal message={message} isGameOver={isGameOver} />
           </div>
         )}
         {isGameOver && <audio src={GameOverBg} autoPlay />}
