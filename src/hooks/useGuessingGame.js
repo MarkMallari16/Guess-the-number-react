@@ -21,7 +21,7 @@ function useGuessingGame() {
         const { newRange, newLives } = getRangeAndLives(difficulty);
         setRange(newRange);
         setLives(newLives);
-
+     
         setRandomNumber(generateRandomNumbers(difficulty, newRange))
 
         localStorage.setItem("difficulty", difficulty);
@@ -58,7 +58,7 @@ function useGuessingGame() {
         if (randomNumber === guess) {
             setIsUserGuessed(true);
             return "You guess the number!";
-            
+
         } else {
             const updatedLives = lives - 1;
             const newHint = guess < randomNumber ? 'Try Higher!' : 'Try Lower!';
