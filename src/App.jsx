@@ -65,7 +65,7 @@ function App() {
                 <div className='mt-1'>{hint}</div>
               </div>
               <div>
-                <button className='btn btn-primary w-full mt-5' onClick={handleUserGuess} disabled={isGameOver || isUserGuessed}>Guess</button>
+                <button className={`btn btn-primary w-full mt-5 ${(isGameOver || isUserGuessed) ? 'hidden' : 'block'}`} onClick={handleUserGuess}>Guess</button>
               </div>
               {(isGameOver || isUserGuessed) && (
                 <div>
@@ -84,9 +84,9 @@ function App() {
             <audio src={WinnerBg} autoPlay />
           </>
         }
-          <Footer />
+        <Footer />
       </div>
-    
+
     </>
   )
 }
