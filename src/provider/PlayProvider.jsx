@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
+//creating context
 const PlayContext = createContext();
+//separate usePlayState
 function usePlayState() {
     const initialPlay = () => {
         const storedValue = localStorage.getItem("play");
@@ -11,10 +13,9 @@ function usePlayState() {
 
     return [isPlay, setIsplay];
 }
-
 function PlayProvider({ children }) {
     const [isPlay, setIsplay] = usePlayState();
-    
+
     const handlePlay = () => {
         setIsplay(true);
     }
